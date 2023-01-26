@@ -3,7 +3,7 @@
 
 # Progress
  - [x] Week 02
- - [ ] Week 03
+ - [x] Week 03
  - [ ] Week 04
  - [ ] Week 05
  - [ ] Week 06
