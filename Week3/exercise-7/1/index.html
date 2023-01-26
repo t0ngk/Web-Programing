@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
+    <title>WEEK 3 - Exercise</title>
+    <style>
+      .example-gif {
+        max-width: 600px;
+        border: 2px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================================ -->
+    <!-- ตัวอย่าง HTML -->
+    <!-- ============================================================ -->
+    <section class="section">
+      <h1 class="is-size-1">WEEK 3 - Exercise DOM (Optional - ไม่มีคะแนน)</h1>
+      <hr />
+      <div class="columns">
+        <div id="product-list" class="column">
+          <h5 class="is-size-4 mb-3">รายการสินค้า</h5>
+          <div class="columns">
+            <div class="column">
+              <div class="box product">
+                <span class="title">น้ำดื่ม</span>
+                <span class="pl-2 price">10.00 ฿</span>
+              </div>
+            </div>
+            <div class="column">
+              <div class="box product">
+                <span class="title">โคล่า</span>
+                <span class="pl-2 price">15.00 ฿</span>
+              </div>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <div class="box product">
+                <span class="title">ชานมไข่มุก</span>
+                <span class="pl-2 price">40.00 ฿</span>
+              </div>
+            </div>
+            <div class="column">
+              <div class="box product">
+                <span class="title">ชาเขียว</span>
+                <span class="pl-2 price">30.00 ฿</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4">
+          <h5 class="is-size-4">ตะกร้าสินค้า</h5>
+          <table id="cart" class="table is-fullwidth">
+            <thead>
+              <tr>
+                <td>สินค้า</td>
+                <td>จำนวน</td>
+                <td>ราคา</td>
+                <!-- PROBLEM 7.3 -->
+                <!-- <td>ลบ</td>  -->
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <!-- PROBLEM 7.4 -->
+            <!-- <tfoot>
+              <th></th>
+              <th id="total-amount"></th>
+              <th id="total-price"></th>
+              <th></th>
+            </tfoot>   -->
+          </table>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <h5 class="is-size-4"></h5>
+        </div>
+      </div>
+    </section>
+    <hr />
+  </body>
+
+  <script>
+    // Setup Event Listener
+    for (let el of document.getElementsByClassName("product")) {
+      el.addEventListener("click", onSelectProduct);
+    }
+
+    function onSelectProduct(event) {
+      console.log(event.currentTarget);
+      console.log(event.currentTarget.childNodes);
+      // TODO: ...
+      let text = event.currentTarget.childNodes[1].textContent;
+      let price = event.currentTarget.childNodes[3].textContent;
+      alert(text + " " + price.substring(0, price.length - 2));
+    }
+  </script>
+</html>
