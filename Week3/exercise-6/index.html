@@ -23,16 +23,16 @@
     </style>
   </head>
   <body>
-  <div class="navbar is-light p-5">
-        <b class="mr-4">WEEK 2</b>
-        <a href="../exercise-1/index.html" class="mr-4">Exercise 1</a>
-        <a href="../exercise-2/index.html" class="mr-4">Exercise 2</a>
-        <a href="" class="mr-4">Exercise 3</a>
-        <a href="../exercise-4/index.html" class="mr-4">Exercise 4</a>
-        <a href="../exercise-5/index.html" class="mr-4">Exercise 5</a>
-        <a href="../exercise-6/index.html" class="mr-4">Exercise 6</a>
-        <a href="../exercise-7/index.html" class="mr-4">Exercise 7</a>
-    </div>
+    <div class="navbar is-light p-5">
+      <b class="mr-4">WEEK 2</b>
+      <a href="../exercise-1/index.html" class="mr-4">Exercise 1</a>
+      <a href="../exercise-2/index.html" class="mr-4">Exercise 2</a>
+      <a href="../exercise-3/index.html" class="mr-4">Exercise 3</a>
+      <a href="../exercise-4/index.html" class="mr-4">Exercise 4</a>
+      <a href="../exercise-5/index.html" class="mr-4">Exercise 5</a>
+      <a href="" class="mr-4">Exercise 6</a>
+      <a href="../exercise-7/index.html" class="mr-4">Exercise 7</a>
+  </div>
     <section class="section" id="app" >
         <h1 class="is-size-1">{{ title }}</h1>
         <hr />
@@ -59,7 +59,9 @@
             </div>
             <div class="answer column">
               <h5 class="is-size-4">CHECK</h5>
-              <table class="table is-fullwidth">
+              <img v-if="problem.expect_img" :src="problem.expect_img">
+
+              <table v-if="problem.testcases" class="table is-fullwidth">
                 <thead>
                   <tr>
                     <th>Input</th>
@@ -83,8 +85,10 @@
                       title="คลิกเพื่อปริ้นไปที่ console"
                       @click="log($event, testcase.result)"
                     >
+                      <pre v-if="testcase.result === '__PASS__'" class="has-text-success">PASS</pre>
+                      <pre v-if="testcase.result === '__FAIL__'" class="has-text-danger">FAIL</pre>
                       <pre 
-                        v-if="testcase.result !== null"
+                        v-if="testcase.result !== null && testcase.result !== '__PASS__' && testcase.result !== '__FAIL__'"
                         :class="{
                           'has-text-success': isEqual(testcase.expect, testcase.result),
                           'has-text-danger': testcase.result !== null && !isEqual(testcase.expect, testcase.result)
@@ -106,6 +110,7 @@
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="./test.js"></script>
     <script src="./answers.js"></script>
     <script src="./problems.js"></script>
   </body>
