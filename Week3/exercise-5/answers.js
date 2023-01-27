@@ -6,6 +6,24 @@ function plus(input){
     return plus(input[0], input[1]);
 }
 
+// TODO: แก้ประเภทตัวแปลใน function นี้ให้ค่าที่ return ออกมาตรงกับคำตอบ 41
+// *** เปลี่ยนได้เฉพาะประเภทตัวแปล ***
+// global variable
+var a = 'Hello';
+
+function greet() {
+    // local variable
+    let b = 'World';
+    if (b == 'World') {
+        // block-scoped variable
+        var c = 'hello';
+    }
+
+    // variable c cannot be accessed here
+    console.log(a + ' ' + b + ' ' + c);
+    return a + ' ' + b + ' ' + c
+}
+
 function varLetConst() {
     // TODO: แก้ประเภทตัวแปลใน function นี้ให้ค่าที่ return ออกมาตรงกับคำตอบ 41
     // *** เปลี่ยนได้เฉพาะประเภทตัวแปล ***

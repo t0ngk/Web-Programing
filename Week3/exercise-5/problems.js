@@ -19,6 +19,25 @@ const problems = [
     {
         title: 'PROBLEM 5.2',
         body: `
+            แก้ไขประเภทตัวแปรในฟังก์ชัน \`greet()\`
+            
+            วิธีทำ
+            1. แก้ไขเฉพาะประเภทตัวแปรภายในฟังก์ชัน ให้ได้ผลลัพธ์ที่กำหนด
+
+            <details>
+                <summary>Help</summary>
+                https://www.w3schools.com/js/js_scope.asp
+            </details>
+        `,
+        testcases: [
+            { input: null, expect: 'Hello World hello', result: null }
+
+        ],
+        run: greet
+    },
+    {
+        title: 'PROBLEM 5.3',
+        body: `
             แก้ไขประเภทตัวแปรในฟังก์ชัน \`varLetConst()\`
             
             วิธีทำ
@@ -36,7 +55,7 @@ const problems = [
         run: varLetConst
     },
     {
-        title: 'PROBLEM 5.3',
+        title: 'PROBLEM 5.4',
         body: `
             แก้ฟังก์ชัน \`chainfunction(input)\`
             
