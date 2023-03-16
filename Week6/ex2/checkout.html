@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
+    <title>Checkout</title>
+  </head>
+  
+  <body>
+    <div id="app">
+      <!-- code โจทย์ ย่อ code ของโจทย์ไว้ก็ได้ code จะได้ไม่ดูเยอะเกินไป ------------------------------------------------------------------>
+      <div class="modal" v-bind:class="{'is-active':show_modal}">
+        <div class="modal-background" @click="show_modal = !show_modal"></div>
+        <div class="modal-card" style="max-width: 960px; width: 90%">
+          <header class="modal-card-head">
+            <p class="modal-card-title">โจทย์</p>
+            <button
+              @click="show_modal = !show_modal"
+              class="delete"
+              aria-label="close"
+            ></button>
+          </header>
+          <section class="modal-card-body">
+            <p class="has-background-info-light p-2">
+              นี่คือหน้า Checkout ที่เพิ่มเข้ามา โดยสามารถแก้ไข Vue Instance
+              ที่อยู่ใน <code>&lt;script&gt;</code> ที่อยู่ส่วนล่างของ
+              <code>checkout.html</code> ได้เลย
+            </p>
+            <p class="my-4">
+              <b>ข้อ 1 </b> ใน created() ให้ทำการดึงข้อมูลจาก localStorage
+              ที่บันทึกไว้จากหน้าที่แล้วออกมา
+              <a
+                href="https://www.w3schools.com/js/js_json_parse.asp"
+                target="blank"
+                >(ดูวิธีแปลง string เป็น json ที่นี่)</a
+              >
+              และแสดงสินค้าในตะกร้าที่ดึงออกมาจาก localStorage โดยใช้ card
+              ตัวอย่างที่มีให้ และใส่ราคารวม แทนที่ตัวอย่างราคารวมที่ให้มา (copy
+              ที่ทำไว้จากหน้า shop มาก็ได้)
+            </p>
+            <hr />
+            <p class="my-4">
+              <b>ข้อ 2 </b>ผูก v-model ให้กับ input แต่ละตัวใน Form
+              (สามารถกำหนดชื่อตัวแปรเองได้เลย)
+            </p>
+            <hr />
+            <p class="my-4">
+              <b>ข้อ 3 </b>ให้สร้าง <b>Watchers หรือ Computed</b>
+              โดยเมื่อเลือกจังหวัด ให้แสดงอำเภอภายในจังหวัดนั้น
+              และเมื่อเลือกอำเภอ จะแสดงเฉพาะตำบลภายในอำเภอและจังหวัดนั้น
+            </p>
+            <hr />
+            <p class="my-4">
+              <b>ข้อ 4 </b> ลองกดปุ่ม Confirm Order จะมี modal แสดงขึ้นมา
+              ในนั้นจะมีตัวอย่างตารางให้ดู ให้นักศึกษาสร้างตารางตามตัวอย่าง ใน
+              <code>&lt;table id="order-table"&gt;</code>
+              โดยตารางที่นักศึกษาสร้างจะอยู่ด้านล่างต่อจากรูปตัวอย่าง
+              (ไม่ต้องลบรูปออก)
+            </p>
+          </section>
+        </div>
+      </div>
+
+      <!-- Navbar -->
+      <nav
+        class="navbar is-warning"
+        role="navigation"
+        aria-label="main navigation"
+      >
+        <div class="navbar-brand">
+          <a class="navbar-item">
+            <h1 class="is-size-4 has-text-weight-semibold">Checkout</h1>
+          </a>
+        </div>
+
+        <div class="navbar-menu">
+          <div class="navbar-start">
+            <a href="./index.html" class="navbar-item">Shop from Vue</a>
+            <a href="./checkout.html" class="navbar-item">Checkout</a>
+          </div>
+          <div class="navbar-end">
+            <a class="navbar-item my-2" @click="show_modal = !show_modal">
+              <span>เปิดโจทย์</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container is-max-desktop p-5">
+        <div class="column pt-6 pl-0 pr-0">
+          <!-- card cart component แสดงข้อมูลที่อยู่ใน Localstorage ---------------------------------------------->
+          <div class="card mb-4" v-for="product in cart">
+            <div class="card-content p-0">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-96x96">
+                    <img :src="product.image" alt="Placeholder image" />
+                  </figure>
+                </div>
+                <div class="media-content pt-2">
+                  <p class="is-5">{{product.title}}</p>
+                  <p class="has-text-grey-light is-6">{{product.brand}}</p>
+                  <div style="display: flex; justify-content: space-between">
+                    <div>
+                      <span class="is-6 has-text-danger"
+                        >{{product.price}}</span
+                      >
+                      <span>x{{product.quantity}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-size-4">
+          <div class="column is-1 is-offset-8">Total</div>
+          <div class="column is-3 has-text-right">
+            <!-- Total here ---------------------------------------- -->
+            {{total}} ฿
+          </div>
+        </div>
+
+        <hr />
+
+        <h1 class="is-size-4">User Info</h1>
+        <br />
+
+        <!-- Form Column --------------------------------------- -->
+        <div class="columns">
+          <div class="column">
+            <label class="label">Firstname</label>
+            <div class="control">
+              <input
+                class="input"
+                type="text"
+                v-model="order_detail.first_name"
+              />
+            </div>
+          </div>
+          <div class="column">
+            <label class="label">Lastname</label>
+            <div class="control">
+              <input
+                class="input"
+                type="text"
+                v-model="order_detail.last_name"
+              />
+            </div>
+          </div>
+          <div class="column">
+            <label class="label">Tel</label>
+            <div class="control">
+              <input class="input" type="text" v-model="order_detail.tel" />
+            </div>
+          </div>
+        </div>
+
+        <h1 class="is-size-4">Address Info</h1>
+        <br />
+
+        <div class="columns">
+          <div class="column">
+            <label class="label">จังหวัด</label>
+            <div class="select">
+              <select v-model="province_filter">
+                <option value="0">เลือกจังหวัด</option>
+                <option
+                  v-for="item in province"
+                  :key="item.id"
+                  :value="item.id"
+                >
+                  {{ item.name_th }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="column">
+            <label class="label">อำเภอ</label>
+            <div class="select">
+              <select v-model="amphures_filter">
+                <option value="0">เลือกอำเภอ</option>
+                <option
+                  v-for="item in filterAmphures"
+                  :key="item.id"
+                  :value="item.id"
+                >
+                  {{ item.name_th }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="column">
+            <label class="label">ตำบล</label>
+            <div class="select">
+              <select v-model="tambons_filter">
+                <option value="0">เลือกตำบล</option>
+                <option
+                  v-for="item in filterTambons"
+                  :key="item.id"
+                  :value="item.id"
+                >
+                  {{ item.name_th }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="column">
+            <!-- click this button to open Order modal ----------------- -->
+            <label class="label">Comfrim</label>
+            <a
+              @click="modal_confirm_order = !modal_confirm_order"
+              class="button is-warning"
+              >Confirm Order</a
+            >
+          </div>
+        </div>
+
+        <!-- Modal ของตารางใบเสร็จ ------------------------------------------------------------------>
+        <div class="modal" v-bind:class="{'is-active':modal_confirm_order}">
+          <div
+            class="modal-background"
+            @click="modal_confirm_order = !modal_confirm_order"
+          ></div>
+          <div class="modal-card" style="max-width: 960px; width: 90%">
+            <section class="modal-card-body">
+              ตัวอย่าง order
+              <img src="./Table example.png" />
+              <hr />
+              Order Table ของนักศึกษา
+              <table
+                id="order-table"
+                style="width: 100%"
+                class="table is-bordered"
+              >
+                <!-- ใส่ข้อมูลของ table ไว้ในนี้ -------------------------------------------->
+                <thead>
+                  <tr style="text-align: center; font-weight: bold">
+                    <td colspan="4">Order Detail</td>
+                  </tr>
+                  <tr style="font-weight: bold">
+                    <td colspan="2">
+                      ชื่อ : {{order_detail.first_name}}
+                      {{order_detail.last_name}}
+                    </td>
+                    <td colspan="2">ที่อยู่ : {{address}}</td>
+                  </tr>
+                  <tr style="text-align: center; font-weight: bold">
+                    <td colspan="4">รายการสินค้า</td>
+                  </tr>
+                  <tr style="font-weight: bold">
+                    <td>ชื่อสินค้า</td>
+                    <td>ราคาต่อหน่วย</td>
+                    <td>จำนวน</td>
+                    <td>ราคา</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="product in cart">
+                    <td>{{product.title}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{product.quantity}}</td>
+                    <td>{{product.price * product.quantity}}</td>
+                  </tr>
+                  <tr style="text-align: center; font-weight: bold">
+                    <td colspan="2"></td>
+                    <td>ราคารวมทั้งหมด</td>
+                    <td>{{total}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <!-- script ---------------------->
+  <script src="./data/amphures.js"></script>
+  <script src="./data/province.js"></script>
+  <script src="./data/tambons.js"></script>
+  <script
+    defer
+    src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"
+  ></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        cart: [],
+        modal_confirm_order: false,
+        show_modal: false,
+        province: province, // ข้อมูลจังหวัด
+        amphures: amphures, // ข้อมูลอำเภอ
+        tambons: tambons, // ข้อมูลตำบล
+        province_filter: 0,
+        amphures_filter: 0,
+        tambons_filter: 0,
+        order_detail: {},
+      },
+      created() {
+        this.cart = JSON.parse(localStorage.getItem("cart"));
+        if (this.cart == null) {
+          this.cart = [];
+        }
+      },
+      computed: {
+        total() {
+          return this.cart.reduce((total, product) => {
+            return total + product.price * product.quantity;
+          }, 0);
+        },
+        address() {
+          let prov = this.province.find(
+            (item) => item.id == this.province_filter
+          );
+          let amph = this.amphures.find(
+            (item) => item.id == this.amphures_filter
+          );
+          let tamb = this.tambons.find(
+            (item) => item.id == this.tambons_filter
+          );
+          console.log(prov, amph, tamb);
+          if (prov && amph && tamb) {
+            return `${prov.name_th} ${amph.name_th} ${tamb.name_th} ${tamb.zip_code}`;
+          }
+          return "";
+        },
+        filterAmphures() {
+          this.amphures_filter = 0;
+          if (this.province_filter == 0) {
+            return [];
+          }
+          return this.amphures.filter(
+            (item) => item.province_id == this.province_filter
+          );
+        },
+        filterTambons() {
+          this.tambons_filter = 0;
+          if (this.amphures_filter == 0) {
+            return [];
+          }
+          return this.tambons.filter(
+            (item) => item.amphure_id == this.amphures_filter
+          );
+        },
+      },
+    });
+  </script>
+</html>
