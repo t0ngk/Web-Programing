@@ -7,7 +7,7 @@
  - [x] Week 04
  - [x] Week 05
  - [x] Week 06
- - [ ] Week 08
+ - [x] Week 08
  - [ ] Week 09
  - [ ] Week 10
  - [ ] Week 11
