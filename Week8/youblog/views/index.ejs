@@ -1,0 +1,54 @@
+  <%- include('header') -%>
+  <body>
+    <div class="container my-6">
+      <form action="" method="GET">
+        <div class="columns">
+          <div class="column is-11">
+            <div class="field">
+              <div class="control">
+                <input
+                  class="input"
+                  type="text"
+                  name="search"
+                  placeholder="ค้นหาบทความ..."
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column is-1">
+            <input
+              type="submit"
+              class="button is-info is-fullwidth"
+              value="ค้นหา"
+            />
+          </div>
+        </div>
+      </form>
+      <!--  -->
+      <div class="columns">
+        <% article.forEach((item) => { %>
+        <div class="column is-3">
+          <a href=<%= `/blog/${item.id}` %>>
+            <div class="card" style="height: 100%">
+              <div class="card-image">
+                <figure class="image is-4by3">
+                  <img
+                    src=<%= `/image/${item.feature_image}` %>
+                  />
+                </figure>
+              </div>
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-content">
+                    <p class="title is-4"><%= item.title %></p>
+                    <p class="subtitle is-6">by <%= item.author %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+  </body>
